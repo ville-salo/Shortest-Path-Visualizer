@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-// Scaling size for canvas
 // TODO add window rescale-support
-export const canvasWidth = window.innerWidth * .8;
-export const canvasHeight = window.innerHeight * .8;
+export const canvasWidth = window.innerWidth*0.9
+export const canvasHeight = window.innerHeight*0.9
 
 // Function for drawing the vertices (markers) on canvas
 export function drawMarker(ctx, location){
@@ -29,9 +27,12 @@ export function drawEdge(ctx, coordinates){
     for(var i=0; i < coordinates.length-1; i++){
       ctx.beginPath()
       ctx.moveTo(coordinates[i]['x'],coordinates[i]['y'])
-      ctx.lineTo(coordinates[i+1]['x'],coordinates[i+1]['y'])
-      ctx.closePath()
-      ctx.stroke()
+      for(var j=0; j < coordinates.length-1; j++){
+        ctx.lineTo(coordinates[j+1]['x'],coordinates[j+1]['y'])
+        ctx.closePath()
+        ctx.stroke()
+        ctx.moveTo(coordinates[i]['x'],coordinates[i]['y'])
+      }
     }
   }
   ctx.restore()
@@ -47,7 +48,6 @@ export function useCanvas(){
         const ctx = canvasObj.getContext('2d');
         // clear the canvas area before rendering the coordinates held in state
         ctx.clearRect( 0,0, canvasWidth, canvasHeight );
-
         // draw all vertices and edges
         coordinates.forEach((coordinate)=>{drawMarker(ctx, coordinate)});
         drawEdge(ctx, coordinates);

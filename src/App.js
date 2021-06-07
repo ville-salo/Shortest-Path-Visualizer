@@ -3,10 +3,12 @@ import { useCanvas } from './hooks/useCanvas';
 import Graph from './classes/Graph';
 import calculateTSP from './algorithms/tsp'
 import './App.css';
-//===
+import image from './elements/test.jpg'
+
+// Main Program
 function App() {
   
-  const [ coordinates, setCoordinates, canvasRef, canvasWidth, canvasHeight ] = useCanvas();
+  const [ coordinates, setCoordinates, canvasRef, canvasWidth, canvasHeight] = useCanvas();
 
   // Function for handling clicks on canvas
   const handleCanvasClick=(event)=>{
@@ -34,6 +36,11 @@ function App() {
     calculateTSP(adjacencyMatrix,adjacencyMatrix.size)
   };
 
+  const handleMapSource = (event) => {
+    //TODO add functionality for custom map upload
+    
+  }
+
   return (
     <main className="App-main" >
       <canvas 
@@ -44,6 +51,7 @@ function App() {
         onClick={handleCanvasClick} />
       <div className="button" >
         <button onClick={handleMatrixCreation} > Solve TSP </button>
+        <button onClick={handleMapSource}> Add Map</button>
       </div>
     </main>
   );
